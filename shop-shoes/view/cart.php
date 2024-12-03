@@ -78,15 +78,18 @@
                             <span class="price"><?php echo $item_cart['DonGia']  ; ?></span>
                         </div>
                     </div>
+
                     <div class="one-eight text-center">
                         <div class="display-tc">
-                            <input type="text" id="quantity <?php echo $item_cart['MaSP']; ?>" name="quantity"
+                            <input type="number" id="quantity-<?php echo $item_cart['MaSP']; ?>" name="quantity"
                                 class="form-control input-number text-center quantity-input"
                                 value="<?php echo $item_cart['SoLuong']; ?>"
                                 data-price="<?php echo $item_cart['DonGia']; ?>"
-                                data-product-id="<?php echo $item_cart['MaSP']; ?>" min="1" max="100" readonly>
+                                data-product-id="<?php echo $item_cart['MaSP']; ?>" min="0" max="100"
+                                onchange="checkQuantity(<?php echo $item_cart['MaSP']; ?>)">
                         </div>
                     </div>
+
                     <div class="one-eight text-center">
                         <div class="display-tc">
                             <span id="total-price-<?php echo $item_cart['MaSP']; ?>" class="price">

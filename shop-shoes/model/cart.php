@@ -144,7 +144,7 @@ if(isset($_POST['order'])){
         $mail->Host       = 'smtp.gmail.com';                       // SMTP server
         $mail->SMTPAuth   = true;                                   // bật chế độ xác thực SMTP
         $mail->Username   = 'tungtd.topy@gmail.com';        // tài khoản đăng nhập SMTP
-        $mail->Password   = 'tungtdokela';                         // mật khẩu đăng nhập SMTP
+        $mail->Password   = 'tungtdokela123';                         // mật khẩu đăng nhập SMTP
         $mail->SMTPSecure = 'tls';                                  // giao thức bảo mật TLS
         $mail->Port       = 587;
         //Note: ubhl adcn dikf nacv

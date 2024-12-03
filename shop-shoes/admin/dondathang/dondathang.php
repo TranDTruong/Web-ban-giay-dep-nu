@@ -22,14 +22,23 @@
 		                $trang=$_GET['trang'];
 		            }
 		            else{ $trang=1;}
-		            $from =($trang-1)*30;
+                    //15 dữ liệu trên 1 trang
+                    $from =($trang-1)*15;
 
 			 		if(isset($_GET['dk'])){
 			 			$dk=$_GET['dk'];
-			 			$sql="SELECT * from hoadon  where TinhTrang='".$dk."' Order  by NgayDat DESC LIMIT $from,30";
+			 			$sql="SELECT * from hoadon  where TinhTrang='".$dk."' Order  by NgayDat DESC LIMIT $from,15";
 			 		}else{
-			 			$sql="select * from hoadon Order  by NgayDat DESC LIMIT $from,30";
+			 			$sql="select * from hoadon Order  by NgayDat DESC LIMIT $from,15";
 			 		}
+		            // $from =($trang-1)*30;
+
+			 		// if(isset($_GET['dk'])){
+			 		// 	$dk=$_GET['dk'];
+			 		// 	$sql="SELECT * from hoadon  where TinhTrang='".$dk."' Order  by NgayDat DESC LIMIT $from,30";
+			 		// }else{
+			 		// 	$sql="select * from hoadon Order  by NgayDat DESC LIMIT $from,30";
+			 		// }
 			 		
 					$rs=mysqli_query($conn,$sql); $so=0;
 				 	while ($row=mysqli_fetch_array($rs)) { ?>
@@ -98,7 +107,8 @@
 					 		} 
 		            $query_dssp2=mysqli_query($conn,$ds_spn1b);
 		            $sosp=mysqli_num_rows($query_dssp2);
-		            $sotrang = ceil($sosp/30); ?>
+                    $sotrang = ceil($sosp/15);
+		            // $sotrang = ceil($sosp/30); ?>
         <hr>
         <ul class="pagination justify-content-center">
             <?php for($x=1;$x<=$sotrang;$x++){ 
