@@ -1,6 +1,6 @@
 <?php
 include_once('../../model/database.php');
-	// Thêm màu
+	// Cập nhật
 	if(isset($_POST['sua'])){
 		$manv=$_POST['manv'];
 		$ten=$_POST['tennv'];
@@ -20,7 +20,7 @@ include_once('../../model/database.php');
 		}
 	}
 	//----------------------------------------
-	//Cập nhập
+	// Thêm
 	if(isset($_POST['them'])){
 		$ten=$_POST['tennv'];
 		$email=$_POST['email'];
@@ -40,14 +40,14 @@ include_once('../../model/database.php');
 	}
 
 	//----------------------------------------
-// xóa 
-if(isset($_GET['xoa'])){
-		$manv=$_GET['manv'];
-		$sql="delete  from nhanvien where MaNV='$manv'";
-		$rs=mysqli_query($conn,$sql);
-		if(isset($rs)){
-			header('location:../index.php?action=nhanvien&thongbao=xoa');
-		}else{
-			header('location:../index.php?action=nhanvien&thongbao=loi');
+	// Xoá 
+	if(isset($_GET['xoa'])){
+			$manv=$_GET['manv'];
+			$sql="delete  from nhanvien where MaNV='$manv'";
+			$rs=mysqli_query($conn,$sql);
+			if(isset($rs)){
+				header('location:../index.php?action=nhanvien&thongbao=xoa');
+			}else{
+				header('location:../index.php?action=nhanvien&thongbao=loi');
+			}
 		}
-	}

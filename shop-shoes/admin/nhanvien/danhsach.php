@@ -5,7 +5,6 @@
     $date=getdate();
     $thang=$date['year'].'-'.$date['mon'];
 
-    // Lấy doanh thu tháng từ bảng hoadon
     $sql_dtt="SELECT MaNV, SUM(TongTien) AS DoanhThuThang FROM hoadon WHERE TinhTrang='hoàn thành' AND (NgayGiao BETWEEN '".$thang."-01' AND '".$thang."-31') GROUP BY MaNV";
     $rs_dtt=mysqli_query($conn,$sql_dtt);
     $doanhThuThang = [];
@@ -45,8 +44,7 @@
                         $maNV = $row['MaNV'];
                         $doanhThu = isset($doanhThuThang[$maNV]) ? $doanhThuThang[$maNV] : 0;
                         $phanTramHoaHong = 0;
-
-                        // Tính phần trăm hoa hồng dựa trên doanh thu tháng
+                        
                         if ($doanhThu < 50000000) {
                             $phanTramHoaHong = 5;
                         } elseif ($doanhThu >= 50000000 && $doanhThu <= 100000000) {
