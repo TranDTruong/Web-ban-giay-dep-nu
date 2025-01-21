@@ -29,6 +29,8 @@
     <div class="form-group col-sm-3"><label class="m-auto" for="">Mật Khẩu</label>
         <input type="text" class="form-control" name="mk" required>
     </div>
+    <div class="form-group col-sm-2"></div>
+    <div class="form-group col-sm-1"></div>
     <div class="form-group col-sm-3"><label class="m-auto" for="">Thời Gian Ca Làm</label>
         <input type="text" class="form-control" name="tgcl" required>
     </div>
@@ -38,6 +40,8 @@
     <!-- <div class="form-group col-sm-3"><label class="m-auto" for="">Doanh Thu</label>
         <input type="number" step="0.01" class="form-control" name="doanhthu" required>
     </div> -->
+    <div class="form-group col-sm-2"></div>
+    <div class="form-group col-sm-1"></div>
     <div class="form-group col-sm-4"></div>
     <div class="form-group col-sm-3"><label for="masv">&emsp;</label><input type="submit"
             class="form-control badge-info" name="them" value="Thêm"></div>

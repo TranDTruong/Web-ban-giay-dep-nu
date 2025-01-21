@@ -21,29 +21,33 @@
     </div><br>
     <div class="card">
         <div class="card-body">
-            <table class="table table-hover m-auto text-center" style="font-size: 13px;">
-                <thead class="badge-info">
-                    <tr>
-                        <th>Mã Nhân Viên</th>
-                        <th>Họ Tên</th>
-                        <th>Email</th>
-                        <th>Số Điện Thoại</th>
-                        <th>Địa Chỉ</th>
-                        <th>Quyền</th>
-                        <th>Thời Gian Ca Làm</th>
-                        <th>Lương Cứng</th>
-                        <th>Doanh Thu Tháng</th>
-                        <th>Phần Trăm Hoa Hồng</th>
-                        <th>Hoa Hồng Tháng</th>
-                        <!-- <th>Mật Khẩu</th> -->
-                        <th colspan="2" class="badge-danger"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = mysqli_fetch_array($rs)) {
+            <div class="table-responsive">
+                <table class="table table-hover m-auto text-center" style="font-size: 13px;">
+                    <thead class="badge-info">
+                        <tr>
+                            <!-- <th>Mã Nhân Viên</th> -->
+                            <th>Họ Tên</th>
+                            <th>Email</th>
+                            <th>Số Điện Thoại</th>
+                            <!-- <th>Địa Chỉ</th> -->
+                            <th>Quyền</th>
+                            <th>Thời Gian Ca Làm</th>
+                            <th>Lương Cứng</th>
+                            <th>Doanh Thu Tháng</th>
+                            <th>Phần Trăm Hoa Hồng</th>
+                            <th>Hoa Hồng Tháng</th>
+                            <th>Tổng lương</th>
+                            <!-- <th>Mật Khẩu</th> -->
+                            <th colspan="2" class="badge-danger"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                     while ($row = mysqli_fetch_array($rs)) {
                         $maNV = $row['MaNV'];
                         $doanhThu = isset($doanhThuThang[$maNV]) ? $doanhThuThang[$maNV] : 0;
                         $phanTramHoaHong = 0;
+                        $lc = $row['LuongCung'];
                         
                         if ($doanhThu < 50000000) {
                             $phanTramHoaHong = 5;
@@ -54,32 +58,35 @@
                         }
 
                         $hoaHongThang = ($doanhThu * $phanTramHoaHong) / 100;
+                        $tongLuong = $lc + $hoaHongThang;
                     ?>
-                    <tr>
-                        <td><?php echo $row['MaNV']; ?></td>
-                        <td><?php echo $row['TenNV']; ?></td>
-                        <td><?php echo $row['Email']; ?></td>
-                        <td><?php echo $row['SDT']; ?></td>
-                        <td><?php echo $row['DiaChi']; ?></td>
-                        <td><?php echo $row['Quyen']; ?></td>
-                        <td><?php echo $row['ThoiGianCaLam']; ?></td>
-                        <td><?php echo number_format($row['LuongCung'], 0, ',', '.'); ?> VND</td>
-                        <td><?php echo number_format($doanhThu, 0, ',', '.'); ?> VND</td>
-                        <td><?php echo $phanTramHoaHong . '%'; ?></td>
-                        <td><?php echo number_format($hoaHongThang, 0, ',', '.'); ?> VND</td>
-                        <!-- <td><input type="password" readonly class="btn btn-sm bt"
+                        <tr>
+                            <!-- <td><?php echo $row['MaNV']; ?></td> -->
+                            <td><?php echo $row['TenNV']; ?></td>
+                            <td><?php echo $row['Email']; ?></td>
+                            <td><?php echo $row['SDT']; ?></td>
+                            <!-- <td><?php echo $row['DiaChi']; ?></td> -->
+                            <td><?php echo $row['Quyen']; ?></td>
+                            <td><?php echo $row['ThoiGianCaLam']; ?></td>
+                            <td><?php echo number_format($row['LuongCung'], 0, ',', '.'); ?> VND</td>
+                            <td><?php echo number_format($doanhThu, 0, ',', '.'); ?> VND</td>
+                            <td><?php echo $phanTramHoaHong . '%'; ?></td>
+                            <td><?php echo number_format($hoaHongThang, 0, ',', '.'); ?> VND</td>
+                            <td><?php echo number_format($tongLuong, 0, ',' ,'.')?> VND</td>
+                            <!-- <td><input type="password" readonly class="btn btn-sm bt"
                                 value="<?php echo $row['MatKhau']; ?>"></td> -->
-                        <td><a href="index.php?action=nhanvien&view=sua&manv=<?php echo $row['MaNV']; ?>"><i
-                                    class="far fa-edit">Sửa</i></a></td>
-                        <td><a href="nhanvien/xuly.php?xoa&manv=<?php echo $row['MaNV']; ?>"><i
-                                    class="fas fa-backspace">Xoá</i></a></td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-            <hr>
-            <div class="m-auto">
-                <a href="?action=nhanvien&view=them"><button class="btn btn-info" type="button">Thêm</button></a>
+                            <td><a href="index.php?action=nhanvien&view=sua&manv=<?php echo $row['MaNV']; ?>"><b
+                                        class="text-success">Sửa</b></a></td>
+                            <td><a href="nhanvien/xuly.php?xoa&manv=<?php echo $row['MaNV']; ?>"><b
+                                        class="text-danger">Xoá</b></a></td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                <hr>
+                <div class="m-auto">
+                    <a href="?action=nhanvien&view=them"><button class="btn btn-info" type="button">Thêm</button></a>
+                </div>
             </div>
         </div>
     </div>
