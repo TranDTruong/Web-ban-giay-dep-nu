@@ -3,6 +3,7 @@
         <center><img class="loading-cart" src="webroot/image/loader.gif" alt=""></center>
     </div>
 </div>
+
 <?php
 if(isset($_POST['addtocart'])){
     $idproduct=$_POST['idproduct'];
@@ -140,27 +141,51 @@ if(isset($_POST['order'])){
     $order=order_product($nn,$dcnn,$sdtnn,$makh,$tt);
     if($order){
         $mail = new PHPMailer(true);
-        $mail->isSMTP();                                            // sử dụng SMTP
-        $mail->Host       = 'smtp.gmail.com';                       // SMTP server
-        $mail->SMTPAuth   = true;                                   // bật chế độ xác thực SMTP
-        $mail->Username   = 'tungtd.topy@gmail.com';        // tài khoản đăng nhập SMTP
-        $mail->Password   = 'tungtdokela123';                         // mật khẩu đăng nhập SMTP
-        $mail->SMTPSecure = 'tls';                                  // giao thức bảo mật TLS
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'tungtd.topy@gmail.com'; 
+        $mail->Password   = 'tungtdokela123'; // Thay YOUR_APP_PASSWORD bằng mật khẩu ứng dụng
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
-        //Note: ubhl adcn dikf nacv
-        //Thong tin nguoi nhan
-        $mail->setFrom('tungtd.topy@gmail.com', 'Shop Shoes');          // địa chỉ email và tên người gửi
-        $mail->addAddress($kh['Email'], $kh['TenKH']); // địa chỉ email và tên người nhận
-        $mail->Subject = ' Shop Shoes - DON HANG CUA BAN';                               // tiêu đề email
-        $mail->Body    = $message;     
-        $mail->isHTML(true);                            // định dạng email dưới dạng HTML
-        // $mail->addAttachment('path/to/file.pdf');       // đính kèm tập tin PDF
-        if ($mail->send()) {
+
+        $mail->setFrom('tungtd.topy@gmail.com', 'Shop Shoes');
+        $mail->addAddress($kh['Email'], $kh['TenKH']);
+        $mail->Subject = 'Shop Shoes - Đơn hàng của bạn';
+        $mail->isHTML(true);
+        $mail->Body    = $message;
+
+        try {
+            $mail->send();
+            // echo json_encode(['status' => 'success', 'message' => 'Thanh toán thành công!']);
             header('location:?view=order-complete');
-        } else {
-            echo 'Email could not be sent';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } 
+        } catch (Exception $e) {
+            echo "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Tạo thông báo thành công
+                const successMessage = document.createElement('div');
+                successMessage.style.position = 'fixed';
+                successMessage.style.top = '0';
+                successMessage.style.left = '0';
+                successMessage.style.right = '0';
+                successMessage.style.backgroundColor = '#4caf50';
+                successMessage.style.color = 'white';
+                successMessage.style.textAlign = 'center';
+                successMessage.style.padding = '15px';
+                successMessage.style.fontSize = '18px';
+                successMessage.style.fontWeight = 'bold';
+                successMessage.textContent = 'Thanh toán thành công!';
+                document.body.appendChild(successMessage);
+
+                // Tự động ẩn thông báo sau 3 giây
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 3000);
+            });
+        </script>";
+        header('location:?view=order-complete');
+        }
     }
 }
 ?>

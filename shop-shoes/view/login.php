@@ -54,7 +54,7 @@
                         Không có tài khoản <a href="../?view=sign-up" class="text-decoration-none ml-2 ">Đăng ký</a>
                     </div>
                     <div class="d-flex justify-content-center links">
-                        <a href="#" class="text-decoration-none"></a>Quên mật khẩu?</a>
+                        <!-- <a href="#" class="text-decoration-none"></a>Quên mật khẩu?</a> -->
                     </div>
                 </div>
             </div>

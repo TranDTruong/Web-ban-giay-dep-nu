@@ -5,9 +5,7 @@
     $username = "root";
     $password = "";
 
-    // Create connection
     $conn = mysqli_connect($servername, $username, $password, $database);
-    // Check connection
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -136,6 +134,7 @@ function price_sale($id,$gia){
   $query_km=mysqli_query($conn,$km);
   while ($kq_km=mysqli_fetch_array($query_km)) {
     $km1="SELECT * FROM `khuyenmai` WHERE `MaKM`=".$kq_km['MaKM']." and NgayBD <='".$ngay."' and NgayKT >='".$ngay."'";
+    // $km1="SELECT * FROM `khuyenmai` WHERE `MaKM` = '3' AND NOW() BETWEEN `NgayBD` AND `NgayKT`;";
       $query_km1=mysqli_query($conn,$km1);
       while ($kq_km=mysqli_fetch_array($query_km1)) { 
            if(isset($kq_km['KM_PT'])){ $b=$b+($kq_km['KM_PT']);} 
@@ -251,7 +250,7 @@ function product_addtoreview($masp,$id,$nd){
     }     
   mysqli_close($conn);
 }
-/////// tải thêm nhiều sản phẩm với ajax
+// tải thêm nhiều sản phẩm với ajax
 if (isset($_POST['page'])==true) {
   $page = $_POST['page']*12;
   $row_count = $_POST['rowCount'];

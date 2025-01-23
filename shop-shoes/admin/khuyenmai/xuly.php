@@ -40,28 +40,63 @@ include_once('../../model/database.php');
 			header('location:../index.php?action=khuyenmai&thongbao=sua');
 		}
 	}
-	if(isset($_GET['apply'])){
-		$makm=$_GET['makm'];
-		$chon=$_GET['chon'];
+	if (isset($_GET['apply'])) {
+		$makm = $_GET['makm'];
+		$chon = $_GET['chon'];
 		foreach ($chon as $key => $value) {
-			$sql="INSERT INTO `sanphamkhuyenmai`(`MaSP`, `MaKM`) VALUES ('$value','$makm')";
-			$rs=mysqli_query($conn,$sql);
-			
+			$check_sql = "SELECT COUNT(*) as count FROM `sanphamkhuyenmai` WHERE MaSP='$value' AND MaKM='$makm'";
+			$check_rs = mysqli_query($conn, $check_sql);
+			$check_row = mysqli_fetch_assoc($check_rs);
+	
+			if ($check_row['count'] == 0) {
+				$sql = "INSERT INTO `sanphamkhuyenmai`(`MaSP`, `MaKM`) VALUES ('$value', '$makm')";
+				mysqli_query($conn, $sql);
+			}
 		}
 		header('location:../index.php?action=khuyenmai&thongbao=them');
-		
 	}
-	if(isset($_GET['apply2'])){
-		$makm=$_GET['makm'];
-		$masp=$_GET['masp'];
-		
-			$sql="INSERT INTO `sanphamkhuyenmai`(`MaSP`, `MaKM`) VALUES ('$masp','$makm')";
-			$rs=mysqli_query($conn,$sql);
-			if(isset($rs)){
+	
+	if (isset($_GET['apply2'])) {
+		$makm = $_GET['makm'];
+		$masp = $_GET['masp'];
+	
+		$check_sql = "SELECT COUNT(*) as count FROM `sanphamkhuyenmai` WHERE MaSP='$masp' AND MaKM='$makm'";
+		$check_rs = mysqli_query($conn, $check_sql);
+		$check_row = mysqli_fetch_assoc($check_rs);
+	
+		if ($check_row['count'] == 0) {
+			$sql = "INSERT INTO `sanphamkhuyenmai`(`MaSP`, `MaKM`) VALUES ('$masp', '$makm')";
+			$rs = mysqli_query($conn, $sql);
+	
+			if ($rs) {
 				header('location:../index.php?action=khuyenmai&thongbao=them');
 			}
-		
-		
+		} else {
+			header('location:../index.php?action=khuyenmai&thongbao=duplicated');
+		}
 	}
+	
+	
+	// if(isset($_GET['apply'])){
+	// 	$makm=$_GET['makm'];
+	// 	$chon=$_GET['chon'];
+	// 	foreach ($chon as $key => $value) {
+	// 		$sql="INSERT INTO `sanphamkhuyenmai`(`MaSP`, `MaKM`) VALUES ('$value','$makm')";
+	// 		$rs=mysqli_query($conn,$sql);
+			
+	// 	}
+	// 	header('location:../index.php?action=khuyenmai&thongbao=them');
+		
+	// }
+	// if(isset($_GET['apply2'])){
+	// 	$makm=$_GET['makm'];
+	// 	$masp=$_GET['masp'];
+		
+	// 		$sql="INSERT INTO `sanphamkhuyenmai`(`MaSP`, `MaKM`) VALUES ('$masp','$makm')";
+	// 		$rs=mysqli_query($conn,$sql);
+	// 		if(isset($rs)){
+	// 			header('location:../index.php?action=khuyenmai&thongbao=them');
+	// 		}
+	// }
 
 ?>
