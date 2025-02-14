@@ -43,7 +43,7 @@
     <!-- Date Picker -->
     <link rel="stylesheet" href="webroot/css/template/bootstrap-datepicker.css">
     <!-- Flaticons  -->
-    <link rel="stylesheet" href="webroot/css/template/fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="/webroot/css/template/fonts/flaticon/font/flaticon.css">
 
     <!-- Theme style  -->
     <link rel="stylesheet" href="webroot/css/template/style.css">

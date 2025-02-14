@@ -82,7 +82,7 @@
                     <div class="one-eight text-center">
                         <div class="display-tc">
                             <input type="number" id="quantity-<?php echo $item_cart['MaSP']; ?>" name="quantity"
-                                class="form-control input-number text-center quantity-input"
+                                class="form-control input-number text-center quantity-input" readonly
                                 value="<?php echo $item_cart['SoLuong']; ?>"
                                 data-price="<?php echo $item_cart['DonGia']; ?>"
                                 data-product-id="<?php echo $item_cart['MaSP']; ?>" min="0" max="100"
@@ -116,45 +116,33 @@
         <!-- Số lượng nhập và cập nhật giá -->
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            function updateTotals() {
-                let subtotal = 0;
-                const quantityInputs = document.querySelectorAll('.quantity-input');
+            document.getElementById('Apply_Coupon').addEventListener('click', function() {
+                var couponCode = document.getElementById('Coupon').value;
+                if (couponCode === '') {
+                    alert("Vui lòng nhập mã giảm giá!");
+                    return;
+                }
 
-                quantityInputs.forEach(input => {
-                    const quantity = parseInt(input.value);
-                    const price = parseFloat(input.dataset.price.replace(/,/g, ''));
-
-                    if (!isNaN(quantity) && quantity > 0) {
-                        subtotal += price * quantity;
-
-                        // Cập nhật giá hiển thị cho từng sản phẩm
-                        const productId = input.dataset.productId;
-                        const totalPriceElement = document.querySelector(`#total-price-${productId}`);
-                        if (totalPriceElement) {
-                            totalPriceElement.textContent = new Intl.NumberFormat().format(price *
-                                quantity);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/shop-shoes/api/apply_coupon.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.status === 'success') {
+                            document.getElementById('coupon_apply').textContent = new Intl
+                                .NumberFormat().format(response.discount);
+                            document.getElementById('total').textContent = new Intl.NumberFormat()
+                                .format(response.total);
+                            document.getElementById('tiensale').value = response.discount;
+                            document.getElementById('tongtien').value = response.total;
+                        } else {
+                            alert(response.message);
                         }
                     }
-                });
-
-                // Cập nhật giá trị hiển thị cho tạm tính và tổng tiền
-                document.getElementById('subtotal').textContent = new Intl.NumberFormat().format(subtotal);
-                document.getElementById('total').textContent = new Intl.NumberFormat().format(subtotal);
-
-                // Cập nhật giá trị trong các trường ẩn để gửi đi
-                document.querySelector('input[name="tamtinh"]').value = subtotal;
-                document.querySelector('input[name="tongtien"]').value = subtotal;
-            }
-
-            // Lắng nghe sự thay đổi trên các input số lượng
-            document.querySelectorAll('.quantity-input').forEach(input => {
-                input.addEventListener('input', function() {
-                    updateTotals();
-                });
+                };
+                xhr.send('coupon=' + couponCode);
             });
-
-            // Gọi hàm cập nhật tổng khi tải trang
-            updateTotals();
         });
         </script>
 
